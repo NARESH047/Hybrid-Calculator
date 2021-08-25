@@ -18,17 +18,20 @@ import androidx.fragment.app.Fragment;
 
 import org.mariuszgromada.math.mxparser.Expression;
 
-public class CalculatorFragment extends Fragment {
+public class CalculatorFragment extends Fragment implements View.OnClickListener{
     private EditText display;
     private ImageButton backspace;
     private Button zero,one,two,three,four,five,six,seven,eight,nine,add,sub,multiply,divide,equals,point,clear, bracket, power;
     private CalculatorFragmentListener listener;
+    View view;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.calculator_fragment, container, false);
+        view = inflater.inflate(R.layout.calculator_fragment, container, false);
+
+        return view;
     }
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -58,125 +61,82 @@ public class CalculatorFragment extends Fragment {
         backspace = view.findViewById(R.id.backspaceButton);
 
 
-        zero.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        zero.setOnClickListener(this);
+        one.setOnClickListener(this);
+        two.setOnClickListener(this);
+        three.setOnClickListener(this);
+        four.setOnClickListener(this);
+        five.setOnClickListener(this);
+        six.setOnClickListener(this);
+        seven.setOnClickListener(this);
+        eight.setOnClickListener(this);
+        nine.setOnClickListener(this);
+
+        add.setOnClickListener(this);
+        sub.setOnClickListener(this);
+        multiply.setOnClickListener(this);
+        divide.setOnClickListener(this);
+        point.setOnClickListener(this);
+        equals.setOnClickListener(this);
+        bracket.setOnClickListener(this);
+        power.setOnClickListener(this);
+        clear.setOnClickListener(this);
+        backspace.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.zeroButton:
+                updateText("0");
+                break;
+            case R.id.oneButton:
                 updateText("1");
-
-            }
-        });
-        one.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateText("1");
-
-            }
-        });
-        two.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateText("2");
-
-            }
-        });
-        three.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.twoButton:
+                display.setText("2");
+                break;
+            case R.id.threeButton:
                 updateText("3");
-
-            }
-        });
-        four.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.fourButton:
                 updateText("4");
-
-            }
-        });
-        five.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.fiveButton:
                 updateText("5");
-
-            }
-        });
-        six.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.sixButton:
                 updateText("6");
-
-            }
-        });
-        seven.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.sevenButton:
                 updateText("7");
-
-            }
-        });
-        eight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.eightButton:
                 updateText("8");
-
-            }
-        });
-        nine.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.nineButton:
                 updateText("9");
-
-            }
-        });
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.addButton:
                 updateText("+");
-
-            }
-        });
-        sub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateText("-");
-
-            }
-        });
-        multiply.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.subtractButton:
+               updateText("-");
+                break;
+            case R.id.multiplyBUtton:
                 updateText("*");
-
-            }
-        });
-        divide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.divisionButton:
                 updateText("/");
-
-            }
-        });
-        point.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.pointButton:
                 updateText(".");
-
-            }
-        });
-        equals.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String expression = display.getText().toString();
-                Expression mathExpression = new Expression(expression);
-                String result = String.valueOf(mathExpression.calculate());
-                listener.sendResult(result);
-                display.setText("");
-            }
-        });
-        bracket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                break;
+            case R.id.powerButton:
+                updateText("^");
+                break;
+            case R.id.bracketButton:
                 int curserPos = display.getSelectionStart();
                 int openBracket = 0 , closedBracket = 0;
                 int textLen = display.getText().length();
@@ -200,40 +160,37 @@ public class CalculatorFragment extends Fragment {
                 if( closedBracket < openBracket  || !display.getText().toString().substring(textLen-1, textLen).equals(")")){
                     updateText(")");
                     display.setSelection(curserPos+1);
-                }
-
-            }
-        });
-        power.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateText("^");
-
-            }
-        });
-        clear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                };
+                break;
+            case R.id.clearButton:
                 display.setText("");
+                break;
+            case R.id.backspaceButton:
+                int cursorPos = display.getSelectionStart();
+                int textLength = display.getText().length();
 
-            }
-        });
-        backspace.setOnClickListener(new View.OnClickListener() {
-                                         @Override
-                                         public void onClick(View v) {
-                                             int cursorPos = display.getSelectionStart();
-                                             int textLength = display.getText().length();
+                if(cursorPos!=0 || textLength!=0){
+                    SpannableStringBuilder selection = (SpannableStringBuilder) display.getText();
+                    selection.replace(cursorPos-1, cursorPos, "");
+                    display.setText(selection);
+                    display.setSelection(cursorPos-1);
+                }
+                break;
+            case R.id.equalsButton:
+                String expression = display.getText().toString();
+                Expression mathExpression = new Expression(expression);
+                String result = String.valueOf(mathExpression.calculate());
+                listener.sendResult(result);
+                display.setText("");
+                break;
+            default:
+                break;
 
-                                             if(cursorPos!=0 || textLength!=0){
-                                                 SpannableStringBuilder selection = (SpannableStringBuilder) display.getText();
-                                                 selection.replace(cursorPos-1, cursorPos, "");
-                                                 display.setText(selection);
-                                                 display.setSelection(cursorPos-1);
-                                             }
-                                         }
-                                     }
-        );
+        }
+
     }
+
+
 
     private void updateText(String stringTOAdd){
         String currentString = display.getText().toString();
@@ -261,6 +218,8 @@ public class CalculatorFragment extends Fragment {
         super.onDetach();
         listener = null;
     }
+
+
 
     public interface CalculatorFragmentListener {
         void sendResult(String result);

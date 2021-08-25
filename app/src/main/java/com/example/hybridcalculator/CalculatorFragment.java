@@ -86,8 +86,8 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
+    public void onClick(View view) {
+        switch (view.getId()){
             case R.id.zeroButton:
                 updateText("0");
                 break;

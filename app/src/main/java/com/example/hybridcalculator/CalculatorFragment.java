@@ -88,54 +88,6 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.zeroButton:
-                updateText("0");
-                break;
-            case R.id.oneButton:
-                updateText("1");
-                break;
-            case R.id.twoButton:
-                display.setText("2");
-                break;
-            case R.id.threeButton:
-                updateText("3");
-                break;
-            case R.id.fourButton:
-                updateText("4");
-                break;
-            case R.id.fiveButton:
-                updateText("5");
-                break;
-            case R.id.sixButton:
-                updateText("6");
-                break;
-            case R.id.sevenButton:
-                updateText("7");
-                break;
-            case R.id.eightButton:
-                updateText("8");
-                break;
-            case R.id.nineButton:
-                updateText("9");
-                break;
-            case R.id.addButton:
-                updateText("+");
-                break;
-            case R.id.subtractButton:
-               updateText("-");
-                break;
-            case R.id.multiplyBUtton:
-                updateText("*");
-                break;
-            case R.id.divisionButton:
-                updateText("/");
-                break;
-            case R.id.pointButton:
-                updateText(".");
-                break;
-            case R.id.powerButton:
-                updateText("^");
-                break;
             case R.id.bracketButton:
                 int curserPos = display.getSelectionStart();
                 int openBracket = 0 , closedBracket = 0;
@@ -184,8 +136,10 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
                 display.setText("");
                 break;
             default:
+                Button pressesButton = (Button) v;
+                String textOnButton = (String) pressesButton.getText();
+                updateText(textOnButton);
                 break;
-
         }
 
     }
